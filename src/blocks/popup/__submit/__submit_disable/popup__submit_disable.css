@@ -1,0 +1,7 @@
+.popup__submit_disable {
+  background: #E5E5E5;
+}
+
+.popup__submit_disable:hover {
+  cursor: default;
+}

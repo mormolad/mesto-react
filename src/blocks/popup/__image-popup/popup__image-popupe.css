@@ -1,0 +1,11 @@
+.popup__image-popup {
+  max-width: 75vw;
+  max-height: 75vh;
+  color: rgb(255, 255, 255);
+}
+
+@media screen and (max-width: 760px) {
+  .popup__image-popup {
+    width: 240px;
+  }
+}

@@ -1,0 +1,14 @@
+.card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    background-repeat: no-repeat;
+
+    display: grid;
+
+    grid-template-columns: 242px 1fr;
+
+    position: relative;
+    font-size: 24px;
+    line-height: 29px;
+    font-weight: 900;
+}

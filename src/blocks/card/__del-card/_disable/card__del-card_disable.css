@@ -1,0 +1,4 @@
+.card__del-card_disable {
+  visibility: none;
+  opacity: 0;
+}

@@ -1,0 +1,3 @@
+.popup__content_add-new-avatar {
+  grid-template-rows: 103px minmax(59px, auto) 90px;
+}

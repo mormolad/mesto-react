@@ -1,0 +1,12 @@
+.profile__info {
+    display: grid;
+    color: #ffffff;
+
+}
+
+@media screen and (max-width: 1023px) {
+    .profile__info {
+        max-width: 288px;
+        margin: 0;
+    }
+}

@@ -1,0 +1,12 @@
+.card__mask-card {
+  height: 282px;
+  width: 282px;
+
+  border-radius: 10px 10px 0px 0px;
+  cursor: pointer;
+  grid-column: 1 / span 2;
+
+  object-fit: cover;
+  background-color: black;
+  color: rgb(255, 255, 255);
+}

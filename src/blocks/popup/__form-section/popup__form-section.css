@@ -1,0 +1,12 @@
+.popup__form-section {
+  width: 358px;
+}
+
+@media screen and (max-width: 1023px) {
+  .popup__form-section {
+    width: 238px;
+    margin: auto;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}

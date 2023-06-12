@@ -1,0 +1,4 @@
+.popup__content_delete {
+  grid-template-rows: minmax(59px, auto) 100px;
+  top: -110px;
+}

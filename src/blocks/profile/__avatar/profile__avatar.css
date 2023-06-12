@@ -1,0 +1,15 @@
+.profile__avatar {
+  position: relative;
+  top: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  margin: 0 30px 0 0;
+}
+
+@media screen and (max-width: 1023px) {
+  .profile__avatar {
+    margin: 0 0 28px 0;
+    /* так вроде здесь низ правлю а там верх*/
+  }
+}
