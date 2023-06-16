@@ -1,35 +1,42 @@
 import '../index.css';
-import Header from './header.js';
-import Main from './main.js';
-import Footer from './footer.js';
-import PopupWithForm from './PopupWithForm.js';
-import ImagePopup from './ImagePopup.js';
+import Header from './Header';
+import Main from './Main';
+import Footer from './Footer';
+import PopupWithForm from './PopupWithForm';
+import ImagePopup from './ImagePopup';
+import React from 'react';
 
 function App() {
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState([
+    false,
+  ]);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState([false]);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState([
+    false,
+  ]);
+
   return (
     <div className="page">
       <Header />
       <Main
         onEditProfile={() => {
-          document
-            .querySelector('#popup-edit-user')
-            .classList.add('popup_enable');
+          setIsEditProfilePopupOpen(true);
         }}
         onAddPlace={() => {
-          document
-            .querySelector('#popup-add-card')
-            .classList.add('popup_enable');
+          setIsAddPlacePopupOpen(true);
         }}
         onEditAvatar={() => {
-          document
-            .querySelector('#popup-add-new-avatar')
-            .classList.add('popup_enable');
+          setIsEditAvatarPopupOpen(true);
         }}
       />
       <Footer />
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-user"
+        isOpen={isEditProfilePopupOpen}
+        closeAllPopups={() => {
+          setIsEditProfilePopupOpen(false);
+        }}
         children={
           <>
             <div className="popup__form-section">
@@ -38,8 +45,8 @@ function App() {
                 className="popup__field"
                 id="input-user-name"
                 name="inputUserName"
-                minlength="2"
-                maxlength="40"
+                minLength="2"
+                maxLength="40"
                 placeholder="Имя автора"
                 required
               />
@@ -51,8 +58,8 @@ function App() {
                 className="popup__field"
                 id="input-user-employment"
                 name="inputUserEmployment"
-                minlength="2"
-                maxlength="200"
+                minLength="2"
+                maxLength="200"
                 placeholder="Род деятельности"
                 required
               />
@@ -64,6 +71,10 @@ function App() {
       <PopupWithForm
         title="Новое место"
         name="add-card"
+        isOpen={isAddPlacePopupOpen}
+        closeAllPopups={() => {
+          setIsAddPlacePopupOpen(false);
+        }}
         children={
           <>
             <div className="popup__form-section">
@@ -73,8 +84,8 @@ function App() {
                 id="input-place-name"
                 name="inputPlaceName"
                 placeholder="Название нового места"
-                minlength="2"
-                maxlength="30"
+                minLength="2"
+                maxLength="30"
                 required
               />
               <span className="popup__message-error"></span>
@@ -96,6 +107,10 @@ function App() {
       <PopupWithForm
         title="Обновть аватар?"
         name="add-new-avatar"
+        isOpen={isEditAvatarPopupOpen}
+        closeAllPopups={() => {
+          setIsEditAvatarPopupOpen(false);
+        }}
         children={
           <>
             <div className="popup__form-section">
@@ -133,18 +148,6 @@ function App() {
         }
       />
       <ImagePopup />
-
-      <template id="card-item">
-        <li className="card">
-          <img src="#" alt="" className="card__mask-card" />
-          <h2 className="card__mesto">-</h2>
-          <div className="card__likesAndNumber">
-            <button type="button" className="card__like"></button>
-            <p className="card__numberOfLike"></p>
-          </div>
-          <button type="button" className="card__del-card"></button>
-        </li>
-      </template>
     </div>
   );
 }

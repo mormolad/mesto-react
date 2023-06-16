@@ -1,6 +1,23 @@
 import React from 'react';
-
+import api from '../utils/api';
+import Card from './Card';
 function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
+  const [userName, setUserName] = React.useState('');
+  const [userDescription, setUserDescription] = React.useState('');
+  const [userAvatar, setUserAvatar] = React.useState('');
+  const [cards, setCards] = React.useState([]);
+
+  React.useEffect(() => {
+    api.getInfoUser().then((data) => {
+      setUserName(data.name);
+      setUserDescription(data.about);
+      setUserAvatar(data.avatar);
+    });
+    api.getCard().then((data) => {
+      setCards(data);
+    });
+  }, []);
+
   return (
     <main className="content">
       <section
@@ -13,7 +30,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
             id="profile__edit-avatar"
             onClick={onEditAvatar}
           ></div>
-          <img src="#" alt="фото пользователя" className="profile__avatar" />
+          <img
+            src={userAvatar}
+            alt="фото пользователя"
+            className="profile__avatar"
+          />
         </div>
         <div className="profile__edit">
           <div className="profile__info">
@@ -22,13 +43,15 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
               id="profile__username"
               title="Имя пользователя"
             >
-              Jacob
+              {userName}
             </h1>
             <p
               className="profile__employment"
               id="profile__employment"
               title="род деятельности"
-            ></p>
+            >
+              {userDescription}
+            </p>
           </div>
           <button
             type="button"
@@ -47,7 +70,11 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
         ></button>
       </section>
       <section>
-        <ul className="cards"></ul>
+        <ul className="cards">
+          {cards.map((card) => (
+            <Card data={card} key={card._id} />
+          ))}
+        </ul>
       </section>
     </main>
   );

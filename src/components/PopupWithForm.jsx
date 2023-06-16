@@ -1,9 +1,11 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, children }) {
+function PopupWithForm({ title, name, isOpen, closeAllPopups, children }) {
   return (
     <div
-      className={`popup popup_${name}`}
+      className={`popup popup_${name} ${
+        isOpen === true ? 'popup_enable' : ' '
+      }`}
       id={`popup-${name}`}
       title="модальное окно редактирования"
     >
@@ -11,7 +13,7 @@ function PopupWithForm({ title, name, children }) {
         className={`popup__content popup__content_${name}`}
         name="form-popup"
         id={`content-popup-${name}`}
-        novalidate
+        noValidate
       >
         <h3 className="popup__title" id={`title-popup-${name}`}>
           {title}
@@ -30,6 +32,7 @@ function PopupWithForm({ title, name, children }) {
           title="закрыть модальное окно"
           className="popup__close-popup"
           id="button-close-popup-edit-user"
+          onClick={closeAllPopups}
         ></button>
       </form>
     </div>
