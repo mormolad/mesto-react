@@ -1,7 +1,6 @@
 import React from 'react';
 
 function Card(card) {
-  console.log(card.data);
   return (
     <li className="card" key={card.data._id}>
       <img
