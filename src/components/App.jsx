@@ -14,6 +14,19 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState([
     false,
   ]);
+  const [isImagePopupOpen, setIsImagePopupOpen] = React.useState([false]);
+  const [selectedCard, setSelectedCard] = React.useState([]);
+  const closeAllPopups = () => {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setIsImagePopupOpen(false);
+  };
+
+  function handleCardClick(card) {
+    setSelectedCard(card);
+    setIsImagePopupOpen(true);
+  }
 
   return (
     <div className="page">
@@ -28,15 +41,14 @@ function App() {
         onEditAvatar={() => {
           setIsEditAvatarPopupOpen(true);
         }}
+        onCardClick={handleCardClick}
       />
       <Footer />
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-user"
         isOpen={isEditProfilePopupOpen}
-        closeAllPopups={() => {
-          setIsEditProfilePopupOpen(false);
-        }}
+        onClose={closeAllPopups}
         children={
           <>
             <div className="popup__form-section">
@@ -72,9 +84,7 @@ function App() {
         title="Новое место"
         name="add-card"
         isOpen={isAddPlacePopupOpen}
-        closeAllPopups={() => {
-          setIsAddPlacePopupOpen(false);
-        }}
+        onClose={closeAllPopups}
         children={
           <>
             <div className="popup__form-section">
@@ -108,9 +118,7 @@ function App() {
         title="Обновть аватар?"
         name="add-new-avatar"
         isOpen={isEditAvatarPopupOpen}
-        closeAllPopups={() => {
-          setIsEditAvatarPopupOpen(false);
-        }}
+        onClose={closeAllPopups}
         children={
           <>
             <div className="popup__form-section">
@@ -147,7 +155,11 @@ function App() {
           </>
         }
       />
-      <ImagePopup />
+      <ImagePopup
+        card={selectedCard}
+        isOpen={isImagePopupOpen}
+        onClose={closeAllPopups}
+      />
     </div>
   );
 }

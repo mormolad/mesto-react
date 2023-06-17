@@ -1,17 +1,22 @@
 import React from 'react';
 
-function Card(card) {
+function Card({ card, onCardClick }) {
+  function handleClick() {
+    onCardClick(card);
+  }
+
   return (
-    <li className="card" key={card.data._id}>
+    <li className="card" key={card._id}>
       <img
-        src={card.data.link}
-        alt={card.data.name}
+        src={card.link}
+        alt={card.name}
         className="card__mask-card"
+        onClick={handleClick}
       />
-      <h2 className="card__mesto">{card.data.name}</h2>
+      <h2 className="card__mesto">{card.name}</h2>
       <div className="card__likesAndNumber">
         <button type="button" className="card__like"></button>
-        <p className="card__numberOfLike">{card.data.likes.length}</p>
+        <p className="card__numberOfLike">{card.likes.length}</p>
       </div>
       <button type="button" className="card__del-card"></button>
     </li>

@@ -1,6 +1,6 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, isOpen, closeAllPopups, children }) {
+function PopupWithForm({ title, name, isOpen, onClose, children }) {
   return (
     <div
       className={`popup popup_${name} ${
@@ -32,7 +32,7 @@ function PopupWithForm({ title, name, isOpen, closeAllPopups, children }) {
           title="закрыть модальное окно"
           className="popup__close-popup"
           id="button-close-popup-edit-user"
-          onClick={closeAllPopups}
+          onClick={onClose}
         ></button>
       </form>
     </div>
