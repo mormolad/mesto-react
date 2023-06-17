@@ -3,4 +3,4 @@
 ### Цель: познакомиться с React
 ### Стек: HTML, CSS, JS, React, БЭМ, REST API
 ### Адрес проекта
-https://mormolad.github.io/mesto/
+https://mormolad.github.io/mesto-react/
