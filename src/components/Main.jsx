@@ -8,14 +8,24 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar }) {
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getInfoUser().then((data) => {
-      setUserName(data.name);
-      setUserDescription(data.about);
-      setUserAvatar(data.avatar);
-    });
-    api.getCard().then((data) => {
-      setCards(data);
-    });
+    api
+      .getInfoUser()
+      .then((data) => {
+        setUserName(data.name);
+        setUserDescription(data.about);
+        setUserAvatar(data.avatar);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    api
+      .getCard()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   return (
