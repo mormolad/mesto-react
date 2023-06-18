@@ -47,114 +47,110 @@ function App() {
       <PopupWithForm
         title="Редактировать профиль"
         name="edit-user"
+        buttonText="Сохранить"
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
-        children={
-          <>
-            <div className="popup__form-section">
-              <input
-                type="text"
-                className="popup__field"
-                id="input-user-name"
-                name="inputUserName"
-                minLength="2"
-                maxLength="40"
-                placeholder="Имя автора"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-            <div className="popup__form-section">
-              <input
-                type="text"
-                className="popup__field"
-                id="input-user-employment"
-                name="inputUserEmployment"
-                minLength="2"
-                maxLength="200"
-                placeholder="Род деятельности"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-          </>
-        }
-      />
+      >
+        <>
+          <div className="popup__form-section">
+            <input
+              type="text"
+              className="popup__field"
+              id="input-user-name"
+              name="inputUserName"
+              minLength="2"
+              maxLength="40"
+              placeholder="Имя автора"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+          <div className="popup__form-section">
+            <input
+              type="text"
+              className="popup__field"
+              id="input-user-employment"
+              name="inputUserEmployment"
+              minLength="2"
+              maxLength="200"
+              placeholder="Род деятельности"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+        </>
+      </PopupWithForm>
       <PopupWithForm
         title="Новое место"
         name="add-card"
+        buttonText="Сохранить"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
-        children={
-          <>
-            <div className="popup__form-section">
-              <input
-                type="text"
-                className="popup__field"
-                id="input-place-name"
-                name="inputPlaceName"
-                placeholder="Название нового места"
-                minLength="2"
-                maxLength="30"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-            <div className="popup__form-section">
-              <input
-                type="url"
-                className="popup__field"
-                id="input-url-image-place"
-                name="inputURLImage"
-                placeholder="URL картинки"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-          </>
-        }
-      />
+      >
+        <>
+          <div className="popup__form-section">
+            <input
+              type="text"
+              className="popup__field"
+              id="input-place-name"
+              name="inputPlaceName"
+              placeholder="Название нового места"
+              minLength="2"
+              maxLength="30"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+          <div className="popup__form-section">
+            <input
+              type="url"
+              className="popup__field"
+              id="input-url-image-place"
+              name="inputURLImage"
+              placeholder="URL картинки"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+        </>
+      </PopupWithForm>
       <PopupWithForm
         title="Обновть аватар?"
         name="add-new-avatar"
+        buttonText="Сохранить"
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
-        children={
-          <>
-            <div className="popup__form-section">
-              <input
-                type="url"
-                className="popup__field"
-                id="input-url-new-avatar"
-                name="inputURLAvatar"
-                placeholder="URL картинки"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-          </>
-        }
-      />
+      >
+        <>
+          <div className="popup__form-section">
+            <input
+              type="url"
+              className="popup__field"
+              id="input-url-new-avatar"
+              name="inputURLAvatar"
+              placeholder="URL картинки"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+        </>
+      </PopupWithForm>
 
-      <PopupWithForm
-        title="Вы уверены?"
-        name="delete"
-        children={
-          <>
-            <div className="popup__form-section">
-              <input
-                type="url"
-                className="popup__field"
-                id="input-url-new-avatar"
-                name="inputURLAvatar"
-                placeholder="URL картинки"
-                required
-              />
-              <span className="popup__message-error"></span>
-            </div>
-          </>
-        }
-      />
+      <PopupWithForm title="Вы уверены?" name="delete" buttonText="Удалить?">
+        <>
+          <div className="popup__form-section">
+            <input
+              type="url"
+              className="popup__field"
+              id="input-url-new-avatar"
+              name="inputURLAvatar"
+              placeholder="URL картинки"
+              required
+            />
+            <span className="popup__message-error"></span>
+          </div>
+        </>
+      </PopupWithForm>
       <ImagePopup
         card={selectedCard}
         isOpen={isImagePopupOpen}
