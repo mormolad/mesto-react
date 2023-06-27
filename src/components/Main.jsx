@@ -3,10 +3,16 @@ import React from 'react';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CollectionCardsContext } from '../contexts/CollectionCardsContext';
-function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
+function Main({
+  onEditProfile,
+  onAddPlace,
+  onEditAvatar,
+  onCardClick,
+  onClickLike,
+  onClickDelete,
+}) {
   const userContext = React.useContext(CurrentUserContext);
   const collectionCards = React.useContext(CollectionCardsContext);
-
   return (
     <main className="content">
       <section
@@ -61,7 +67,13 @@ function Main({ onEditProfile, onAddPlace, onEditAvatar, onCardClick }) {
       <section>
         <ul className="cards">
           {collectionCards.map((card) => (
-            <Card card={card} key={card._id} onCardClick={onCardClick} />
+            <Card
+              card={card}
+              key={card._id}
+              onCardClick={onCardClick}
+              onClickLike={onClickLike}
+              onClickDelete={onClickDelete}
+            />
           ))}
         </ul>
       </section>

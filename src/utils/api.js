@@ -84,10 +84,44 @@ class Api {
         console.log(err);
       });
   }
-  //удалить лайк
-  deleteLike(idCard) {
+
+  // //удалить лайк
+  // deleteLike(idCard) {
+  //   return fetch(`${this.url}cards/${idCard}/likes`, {
+  //     method: 'DELETE',
+  //     headers: this.headers,
+  //   })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return res.json();
+  //       }
+  //       return Promise.reject(`Ошибка: ${res.status}`);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+  // //поставить лайк
+  // setLike(idCard) {
+  //   return fetch(`${this.url}cards/${idCard}/likes`, {
+  //     method: 'PUT',
+  //     headers: this.headers,
+  //   })
+  //     .then((res) => {
+  //       if (res.ok) {
+  //         return res.json();
+  //       }
+  //       return Promise.reject(`Ошибка: ${res.status}`);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }
+
+  changeLikeCardStatus(idCard, statusLike) {
+    const changeFetch = statusLike ? 'DELETE' : 'PUT';
     return fetch(`${this.url}cards/${idCard}/likes`, {
-      method: 'DELETE',
+      method: changeFetch,
       headers: this.headers,
     })
       .then((res) => {
@@ -100,22 +134,7 @@ class Api {
         console.log(err);
       });
   }
-  //поставить лайк
-  setLike(idCard) {
-    return fetch(`${this.url}cards/${idCard}/likes`, {
-      method: 'PUT',
-      headers: this.headers,
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Ошибка: ${res.status}`);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }
+
   //установить новый аватар
   setAvatar(urlAvatar) {
     return fetch(`${this.url}users/me/avatar`, {

@@ -45,10 +45,38 @@ function App() {
         console.log(err);
       });
   }, []);
-
+  //обработчик клика по картинке в карте
   function handleCardClick(card) {
     setSelectedCard(card);
     setIsImagePopupOpen(true);
+  }
+  //обработкик клика по лайку
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api
+      .changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCollectionCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  //обработка клика по кнопке удаления карточки
+  function handleCardDelete({ _id }) {
+    api
+      .deleteCard(_id)
+      .then(() => {
+        console.log(collectionCards);
+        setCollectionCards(collectionCards.filter((item) => item._id !== _id));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   return (
@@ -67,6 +95,8 @@ function App() {
               setIsEditAvatarPopupOpen(true);
             }}
             onCardClick={handleCardClick}
+            onClickLike={handleCardLike}
+            onClickDelete={handleCardDelete}
           />
           <Footer />
           <PopupWithForm
