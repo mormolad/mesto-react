@@ -9,7 +9,7 @@ function PopupWithForm({
   onSubmit,
   children,
 }) {
-  console.log(onClose, onSubmit);
+  // console.log(onClose, onSubmit);
   return (
     <div
       className={`popup popup_${name} ${

@@ -2,7 +2,7 @@ import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import React from 'react';
 
-function EditAvatarPopup(isOpen, onClose, onUpdateAvatar) {
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [avatarURL, setAvatarURL] = React.useState('');
   const inputRef = React.useRef('');

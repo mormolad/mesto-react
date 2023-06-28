@@ -13,6 +13,7 @@ function Main({
 }) {
   const currentUser = React.useContext(CurrentUserContext);
   const collectionCards = React.useContext(CollectionCardsContext);
+  console.log(collectionCards);
   return (
     <main className="content">
       <section
