@@ -1,6 +1,15 @@
 import React from 'react';
 
-function PopupWithForm({ title, name, buttonText, isOpen, onClose, children }) {
+function PopupWithForm({
+  title,
+  name,
+  buttonText,
+  isOpen,
+  onClose,
+  onSubmit,
+  children,
+}) {
+  console.log(onClose, onSubmit);
   return (
     <div
       className={`popup popup_${name} ${
@@ -13,6 +22,7 @@ function PopupWithForm({ title, name, buttonText, isOpen, onClose, children }) {
         className={`popup__content popup__content_${name}`}
         name={`form-popup-${name}`}
         id={`content-popup-${name}`}
+        onSubmit={onSubmit}
         noValidate
       >
         <h3 className="popup__title" id={`title-popup-${name}`}>

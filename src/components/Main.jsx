@@ -11,7 +11,7 @@ function Main({
   onClickLike,
   onClickDelete,
 }) {
-  const userContext = React.useContext(CurrentUserContext);
+  const currentUser = React.useContext(CurrentUserContext);
   const collectionCards = React.useContext(CollectionCardsContext);
   return (
     <main className="content">
@@ -26,7 +26,7 @@ function Main({
             onClick={onEditAvatar}
           ></div>
           <img
-            src={userContext.avatar}
+            src={currentUser.avatar}
             alt="фото пользователя"
             className="profile__avatar"
           />
@@ -38,14 +38,14 @@ function Main({
               id="profile__username"
               title="Имя пользователя"
             >
-              {userContext.name}
+              {currentUser.name}
             </h1>
             <p
               className="profile__employment"
               id="profile__employment"
               title="род деятельности"
             >
-              {userContext.about}
+              {currentUser.about}
             </p>
           </div>
           <button

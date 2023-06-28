@@ -3,6 +3,8 @@ import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
+import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 import ImagePopup from './ImagePopup';
 import api from '../utils/api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -14,19 +16,21 @@ function App() {
     false,
   ]);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState([false]);
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState([
-    false,
-  ]);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
+    React.useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = React.useState([false]);
   const [selectedCard, setSelectedCard] = React.useState([]);
+  const [currentUser, setCurentUser] = React.useState([]);
+  const [collectionCards, setCollectionCards] = React.useState([]);
+
   const closeAllPopups = () => {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
     setIsImagePopupOpen(false);
   };
-  const [currentUser, setCurentUser] = React.useState([]);
-  const [collectionCards, setCollectionCards] = React.useState([]);
+
+  //запрашиваем данные с сервера для ползователя и для отрисовки карточек
   React.useEffect(() => {
     api
       .getInfoUser()
@@ -78,6 +82,29 @@ function App() {
         console.log(err);
       });
   }
+  //обработка кнопки Сохранить в форме редоктирования профиля
+  function handleUpdateUser(userDate) {
+    api
+      .setUserData(userDate)
+      .then((data) => {
+        setCurentUser(data);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
+  //обработка кнопки Сохранить в форме редоктирования аватара
+  function handleUpdateAvatar(url) {
+    api
+      .setAvatar(url)
+      .then((data) => {
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }
 
   return (
     <div className="page">
@@ -93,48 +120,18 @@ function App() {
             }}
             onEditAvatar={() => {
               setIsEditAvatarPopupOpen(true);
+              console.log(isEditAvatarPopupOpen);
             }}
             onCardClick={handleCardClick}
             onClickLike={handleCardLike}
             onClickDelete={handleCardDelete}
           />
           <Footer />
-          <PopupWithForm
-            title="Редактировать профиль"
-            name="edit-user"
-            buttonText="Сохранить"
+          <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-          >
-            <>
-              <div className="popup__form-section">
-                <input
-                  type="text"
-                  className="popup__field"
-                  id="input-user-name"
-                  name="inputUserName"
-                  minLength="2"
-                  maxLength="40"
-                  placeholder="Имя автора"
-                  required
-                />
-                <span className="popup__message-error"></span>
-              </div>
-              <div className="popup__form-section">
-                <input
-                  type="text"
-                  className="popup__field"
-                  id="input-user-employment"
-                  name="inputUserEmployment"
-                  minLength="2"
-                  maxLength="200"
-                  placeholder="Род деятельности"
-                  required
-                />
-                <span className="popup__message-error"></span>
-              </div>
-            </>
-          </PopupWithForm>
+            onUpdateUser={handleUpdateUser}
+          />
           <PopupWithForm
             title="Новое место"
             name="add-card"
@@ -169,27 +166,11 @@ function App() {
               </div>
             </>
           </PopupWithForm>
-          <PopupWithForm
-            title="Обновть аватар?"
-            name="add-new-avatar"
-            buttonText="Сохранить"
+          <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-          >
-            <>
-              <div className="popup__form-section">
-                <input
-                  type="url"
-                  className="popup__field"
-                  id="input-url-new-avatar"
-                  name="inputURLAvatar"
-                  placeholder="URL картинки"
-                  required
-                />
-                <span className="popup__message-error"></span>
-              </div>
-            </>
-          </PopupWithForm>
+            onUpdateAvatar={handleUpdateAvatar}
+          />
           <PopupWithForm
             title="Вы уверены?"
             name="delete"
