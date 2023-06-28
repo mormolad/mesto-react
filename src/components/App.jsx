@@ -120,7 +120,6 @@ function App() {
             }}
             onEditAvatar={() => {
               setIsEditAvatarPopupOpen(true);
-              console.log(isEditAvatarPopupOpen);
             }}
             onCardClick={handleCardClick}
             onClickLike={handleCardLike}
