@@ -10,9 +10,9 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   function handleSubmit(e) {
     e.preventDefault();
     // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateAvatar({
-      avatar: avatarURL,
-    });
+    onUpdateAvatar(avatarURL);
+    currentUser.avatar = avatarURL;
+    setAvatarURL('');
   }
 
   // обработака поля адрес аватара

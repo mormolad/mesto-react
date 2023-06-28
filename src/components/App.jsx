@@ -96,6 +96,7 @@ function App() {
   }
   //обработка кнопки Сохранить в форме редоктирования аватара
   function handleUpdateAvatar(url) {
+    console.log(url);
     api
       .setAvatar(url)
       .then((data) => {
