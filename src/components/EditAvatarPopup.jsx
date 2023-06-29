@@ -6,13 +6,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const currentUser = React.useContext(CurrentUserContext);
   const [avatarURL, setAvatarURL] = React.useState('');
   const inputRef = React.useRef('');
+
   //обработчик кнопки Сохранить в форме
   function handleSubmit(e) {
     e.preventDefault();
-    // Передаём значения управляемых компонентов во внешний обработчик
     onUpdateAvatar(avatarURL);
     currentUser.avatar = avatarURL;
-    setAvatarURL('');
+    inputRef.current.value = '';
   }
 
   // обработака поля адрес аватара
