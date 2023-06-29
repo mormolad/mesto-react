@@ -20,6 +20,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   function handleChangeDescription(e) {
     setDescription(e.target.value);
   }
+
   //обработчик кнопки Сохранить в форме
   function handleSubmit(e) {
     // Запрещаем браузеру переходить по адресу формы

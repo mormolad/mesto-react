@@ -9,6 +9,18 @@ function PopupWithForm({
   onSubmit,
   children,
 }) {
+  //установка слушателя для закрытия попапа по кнопке esc и последущее его удаление при закрытии
+  React.useEffect(() => {
+    if (!isOpen) return;
+    function clickEsc(e) {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    }
+    document.addEventListener('keydown', clickEsc);
+    return () => document.removeEventListener('keydown', clickEsc);
+  }, [isOpen]);
+
   return (
     <div
       className={`popup popup_${name} ${
@@ -16,6 +28,7 @@ function PopupWithForm({
       }`}
       id={`popup-${name}`}
       title="модальное окно редактирования"
+      onClick={onClose}
     >
       <form
         className={`popup__content popup__content_${name}`}
@@ -30,7 +43,7 @@ function PopupWithForm({
         {children}
         <button
           type="submit"
-          title="сохранить информацию"
+          title={`${buttonText} информацию`}
           className="popup__submit"
           id="button-submit-popup-edit-user"
         >
