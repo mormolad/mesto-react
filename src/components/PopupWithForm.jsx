@@ -19,7 +19,14 @@ function PopupWithForm({
     }
     document.addEventListener('keydown', clickEsc);
     return () => document.removeEventListener('keydown', clickEsc);
-  }, [isOpen]);
+  }, [isOpen, onClose]);
+
+  //закрыть попап при клике по оверлею
+  function clickOverley(evt) {
+    if (evt.currentTarget === evt.target) {
+      onClose();
+    }
+  }
 
   return (
     <div
@@ -28,7 +35,7 @@ function PopupWithForm({
       }`}
       id={`popup-${name}`}
       title="модальное окно редактирования"
-      onClick={onClose}
+      onClick={clickOverley}
     >
       <form
         className={`popup__content popup__content_${name}`}

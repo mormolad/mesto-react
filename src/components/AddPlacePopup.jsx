@@ -6,11 +6,12 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
   const [name, setName] = React.useState('');
   const [link, setLink] = React.useState('');
 
-  //   //управление полями название картинки и ссылка на картинку
-  //   React.useEffect(() => {
-  //     setName(currentUser.name);
-  //     setLink(currentUser.about);
-  //   }, [currentUser]);
+  //очищаем поля формы при открытии попап
+  React.useEffect(() => {
+    if (!isOpen) return;
+    setName('');
+    setLink('');
+  }, [isOpen]);
 
   // обработка названия рартинки
   function handleChangeName(e) {
@@ -29,8 +30,6 @@ function AddPlacePopup({ isOpen, onClose, onAddCard }) {
       name,
       link,
     });
-    setName('');
-    setLink('');
   }
 
   return (

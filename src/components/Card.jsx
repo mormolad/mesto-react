@@ -8,7 +8,7 @@ function Card({ card, onCardClick, onClickLike, onClickDelete }) {
   }
   // обработчик кнопки удаления карты
   function handleDeleteClick() {
-    onClickDelete(card);
+    onClickDelete(card._id);
   }
   // обработчик лайка
   function handleLikeClick() {

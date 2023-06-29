@@ -4,21 +4,19 @@ import React from 'react';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const currentUser = React.useContext(CurrentUserContext);
-  const [avatarURL, setAvatarURL] = React.useState('');
   const inputRef = React.useRef('');
 
   //обработчик кнопки Сохранить в форме
   function handleSubmit(e) {
     e.preventDefault();
-    onUpdateAvatar(avatarURL);
-    currentUser.avatar = avatarURL;
-    inputRef.current.value = '';
+    onUpdateAvatar(inputRef.current.value);
+    currentUser.avatar = inputRef.current.value;
   }
 
-  // обработака поля адрес аватара
-  function handleChangeAvatarURL(e) {
-    setAvatarURL(inputRef.current.value);
-  }
+  React.useEffect(() => {
+    if (!isOpen) return;
+    inputRef.current.value = '';
+  }, [isOpen]);
 
   return (
     <PopupWithForm
@@ -38,7 +36,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
             id="input-url-new-avatar"
             name="inputURLAvatar"
             placeholder="URL картинки"
-            onChange={handleChangeAvatarURL}
             required
           />
           <span className="popup__message-error"></span>
