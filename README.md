@@ -1,1045 +1,603 @@
-# 📦 ЭПИКИ ДЛЯ РАЗРАБОТКИ
-## Приложение-помощник для турагента + Интерфейс для туриста
+## ✅ Next.js 16 — отлично!
 
-**Версия:** 1.0  
-**Методология:** Agile/Scrum  
-**Спринт:** 2 недели
+Согласен, **Next.js 16** (который выйдет с React 19 стабильным) — это правильный выбор. Давайте обновим стек под актуальные версии.
 
 ---
 
-# 🎨 FRONTEND ЭПИКИ
+## 📌 ОБНОВЛЕННЫЙ ТЕХНОЛОГИЧЕСКИЙ СТЭК (2025)
 
-## FE-EPIC-01: Система аутентификации и авторизации
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 1-2 |
-| **Зависимости** | BE-EPIC-01 |
-
-### User Stories:
-```
-US-FE-01.1: Регистрация по email/телефону
-US-FE-01.2: Вход с JWT-токеном
-US-FE-01.3: 2FA (TOTP/SMS) — включение и верификация
-US-FE-01.4: Восстановление пароля
-US-FE-01.5: Ролевая навигация (агент/турист/админ)
-US-FE-01.6: Авто-логаут при истечении токена
-US-FE-01.7: Экран «Забыли пароль?»
-```
-
-### Deliverables:
-- [ ] Формы регистрации/входа (валидация, ошибки)
-- [ ] Хранение токена (httpOnly cookie / localStorage)
-- [ ] Protected routes (AuthGuard)
-- [ ] 2FA интерфейс (QR-код для TOTP)
-- [ ] Роутинг по ролям
-
-### Acceptance Criteria:
-```
-✅ Регистрация создаёт пользователя с ролью по умолчанию
-✅ Токен обновляется через refresh endpoint
-✅ При 401 — редирект на логин
-✅ 2FA нельзя обойти без верификации
-```
+| Компонент | Версия | Почему |
+|-----------|--------|--------|
+| **Frontend** | Next.js 16 (App Router) | React 19, Turbopack, улучшенный кэшинг |
+| **React** | 19.0.0 | Compiler, Actions, useTransition, useOptimistic |
+| **Backend** | NestJS 11 | Стабильный, отличная DX, поддержка OpenTelemetry |
+| **ORM** | Prisma 6 | Лучший для TypeScript, типизация из коробки |
+| **База данных** | PostgreSQL 17 | Партиционирование, полнотекстовый поиск |
+| **Кэш/Очереди** | Redis 7.4 + BullMQ 5 | Быстро, надежно |
+| **Язык** | TypeScript 5.6 | Полная типизация |
+| **Стили** | TailwindCSS 4 + shadcn/ui | Новая движок, быстрее |
+| **Стейт** | TanStack Query 5 + Zustand 5 | Query — API, Zustand — UI |
+| **Аутентификация** | httpOnly cookies + refresh rotation | Безопасно |
+| **Деплой** | Docker + GitHub Actions + VPS/Vercel | Гибкость |
 
 ---
 
-## FE-EPIC-02: Кабинет турагента (Dashboard + навигация)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 2-4 |
-| **Зависимости** | FE-EPIC-01 |
-
-### User Stories:
-```
-US-FE-02.1: Главный дашборд с виджетами (доход, активные подписки, задачи)
-US-FE-02.2: Боковое меню с навигацией по модулям
-US-FE-02.3: Переключатель тем (светлая/тёмная)
-US-FE-02.4: Профиль агента (редактирование, загрузка логотипа)
-US-FE-02.5: Уведомления в интерфейсе (колокольчик)
-US-FE-02.6: Быстрый поиск по системе (Ctrl+K)
-US-FE-02.7: Онбординг-тур для новых агентов
-```
-
-### Deliverables:
-- [ ] Layout с sidebar/header/footer
-- [ ] Dashboard widgets (графики, карточки)
-- [ ] Theme provider (context + localStorage)
-- [ ] Notification center component
-- [ ] Onboarding tour (reactour / intro.js)
-
-### Acceptance Criteria:
-```
-✅ Все виджеты загружаются асинхронно (скелетоны)
-✅ Меню адаптируется под мобильные (hamburger)
-✅ Тема сохраняется между сессиями
-✅ Онбординг можно пропустить и включить позже
-```
-
----
-
-## FE-EPIC-03: Поиск и фильтрация туров
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | XL (89 story points) |
-| **Спринты** | 3-5 |
-| **Зависимости** | BE-EPIC-02 |
-
-### User Stories:
-```
-US-FE-03.1: Форма поиска (направление, даты, состав, бюджет)
-US-FE-03.2: Расширенные фильтры (питание, рейтинг, авиа, теги)
-US-FE-03.3: Результаты поиска (список/сетка, сортировка)
-US-FE-03.4: Карточка тура (фото, цена, условия, кнопка «В подборку»)
-US-FE-03.5: Карточка отеля с заметками агента
-US-FE-03.6: Сравнение туров (таблица до 4 вариантов)
-US-FE-03.7: Календарь низких цен (heat map по датам)
-US-FE-03.8: Пагинация / бесконечный скролл
-US-FE-03.9: Сохранение параметров поиска (URL params)
-```
-
-### Deliverables:
-- [ ] Search form component (с валидацией дат)
-- [ ] Filter sidebar (collapsible на мобильных)
-- [ ] Tour/Hotel card components
-- [ ] Comparison table component
-- [ ] Calendar heatmap component
-- [ ] URL state sync (query params)
-
-### Acceptance Criteria:
-```
-✅ Поиск работает с debounce 300ms
-✅ Фильтры применяются без перезагрузки страницы
-✅ Состояние поиска сохраняется при навигации
-✅ Карточка тура загружается ≤1 сек (кэш + скелетон)
-✅ Сравнение показывает различия подсветкой
-```
-
----
-
-## FE-EPIC-04: Конструктор подборок
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | XL (89 story points) |
-| **Спринты** | 4-6 |
-| **Зависимости** | FE-EPIC-03, BE-EPIC-03 |
-
-### User Stories:
-```
-US-FE-04.1: Создание новой подборки (название, описание, шаблон)
-US-FE-04.2: Добавление туров/отелей из поиска (drag-n-drop)
-US-FE-04.3: Редактирование состава подборки (удалить, переместить)
-US-FE-04.4: Переключатель «фиксировать цены»
-US-FE-04.5: Выбор шаблона оформления (3-5 вариантов)
-US-FE-04.6: Предпросмотр подборки (как увидит турист)
-US-FE-04.7: Сохранение черновика / публикация
-US-FE-04.8: Экспорт (PDF, ссылка, текст для мессенджера)
-US-FE-04.9: Версионность (история изменений, откат)
-```
-
-### Deliverables:
-- [ ] Collection builder UI (two-column: search + collection)
-- [ ] Drag-n-drop library integration (dnd-kit / react-beautiful-dnd)
-- [ ] Template selector component
-- [ ] Price toggle component
-- [ ] Preview modal (iframe / separate route)
-- [ ] Export buttons with format selection
-- [ ] Version history timeline
-
-### Acceptance Criteria:
-```
-✅ Drag-n-drop работает на тач-устройствах
-✅ Предпросмотр идентичен тому, что видит турист
-✅ Экспорт PDF генерируется ≤5 сек
-✅ Ссылка на подборку открывается без авторизации
-✅ Версии можно сравнивать (diff view)
-```
-
----
-
-## FE-EPIC-05: Интерфейс туриста (подборки + подписки)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 4-6 |
-| **Зависимости** | FE-EPIC-04, BE-EPIC-04 |
-
-### User Stories:
-```
-US-FE-05.1: Публичная страница подборки (по токену)
-US-FE-05.2: График динамики цен (7/14/30 дней)
-US-FE-05.3: Форма настройки подписки (онбординг туриста)
-US-FE-05.4: Профиль туриста (управление подписками, данные)
-US-FE-05.5: Кнопки действий («Забронировать», «Задать вопрос», «Поделиться»)
-US-FE-05.6: Чат с агентом (Telegram deep link / встроенный)
-US-FE-05.7: История просмотров туров
-US-FE-05.8: Кнопки «Скачать мои данные» / «Удалить аккаунт»
-```
-
-### Deliverables:
-- [ ] Public collection page (no auth required)
-- [ ] Price chart component (chart.js / recharts)
-- [ ] Subscription onboarding wizard (step-by-step)
-- [ ] Tourist profile dashboard
-- [ ] Action buttons component
-- [ ] Chat widget (or Telegram link)
-- [ ] GDPR compliance buttons
-
-### Acceptance Criteria:
-```
-✅ Страница подборки загружается ≤2 сек на 3G
-✅ График интерактивный (tooltip, zoom)
-✅ Подписка активируется сразу после подтверждения
-✅ Кнопки соцсетей открывают share-диалог
-✅ Удаление аккаунта требует подтверждения (2 клика)
-```
-
----
-
-## FE-EPIC-06: Мини-CRM (клиенты + сделки)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 6-8 |
-| **Зависимости** | FE-EPIC-02, BE-EPIC-05 |
-
-### User Stories:
-```
-US-FE-06.1: Список клиентов (поиск, фильтры, теги)
-US-FE-06.2: Карточка клиента (контакты, предпочтения, документы)
-US-FE-06.3: Создание/редактирование клиента
-US-FE-06.4: Воронка сделок (канбан-доска)
-US-FE-06.5: Карточка сделки (этап, сумма, даты, комментарии)
-US-FE-06.6: История коммуникаций (лог переписки)
-US-FE-06.7: Напоминания (календарь, дедлайны)
-US-FE-06.8: Сегментация (массовые операции по тегам)
-```
-
-### Deliverables:
-- [ ] Client list with pagination & filters
-- [ ] Client form (with encrypted fields UI)
-- [ ] Kanban board for deals (react-beautiful-dnd)
-- [ ] Deal card component
-- [ ] Communication timeline component
-- [ ] Calendar view for reminders
-- [ ] Bulk actions toolbar
-
-### Acceptance Criteria:
-```
-✅ Канбан позволяет перетаскивать сделки между этапами
-✅ Документы отображаются с маскированием данных
-✅ Напоминания показываются в дашборде
-✅ Сегментация работает с предпросмотром количества
-```
-
----
-
-## FE-EPIC-07: Финансовый модуль
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 7-8 |
-| **Зависимости** | BE-EPIC-06 |
-
-### User Stories:
-```
-US-FE-07.1: Дашборд доходов (графики по периодам)
-US-FE-07.2: Таблица сделок с финансами (доход, комиссия, расходы)
-US-FE-07.3: Калькулятор маржи (ввод параметров, авто-расчёт)
-US-FE-07.4: Управление курсами валют (просмотр, ручной ввод)
-US-FE-07.5: Экспорт отчётов (CSV, Excel, PDF)
-US-FE-07.6: Фильтры по периодам, агентам, направлениям
-```
-
-### Deliverables:
-- [ ] Revenue dashboard with charts
-- [ ] Deals finance table
-- [ ] Margin calculator form
-- [ ] Currency rate management UI
-- [ ] Export modal with format options
-- [ ] Date range picker component
-
-### Acceptance Criteria:
-```
-✅ Калькулятор показывает расчёт в реальном времени
-✅ Курсы можно импортировать CSV
-✅ Экспорт формируется ≤3 сек
-✅ Графики адаптируются под период (день/неделя/месяц/год)
-```
-
----
-
-## FE-EPIC-08: Telegram Mini App интеграция
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 5-7 |
-| **Зависимости** | FE-EPIC-05, BE-EPIC-07 |
-
-### User Stories:
-```
-US-FE-08.1: Инициализация Telegram WebApp SDK
-US-FE-08.2: Адаптация под тему Telegram (цветовая схема)
-US-FE-08.3: Нативные кнопки (MainButton, BackButton)
-US-FE-08.4: Deep links из бота в Mini App
-US-FE-08.5: Отправка данных обратно в бот (closeWithParams)
-US-FE-08.6: Haptic feedback для действий
-US-FE-08.7: Offline indicator (статус соединения)
-```
-
-### Deliverables:
-- [ ] Telegram SDK wrapper (React context)
-- [ ] Theme sync with Telegram
-- [ ] Native button components
-- [ ] Deep link handler
-- [ ] Data callback to bot
-- [ ] Haptic feedback utility
-- [ ] Connection status component
-
-### Acceptance Criteria:
-```
-✅ Mini App открывается внутри Telegram без ошибок
-✅ Тема синхронизируется с настройками Telegram
-✅ Кнопки работают на iOS и Android
-✅ Данные передаются в бот после действия пользователя
-```
-
----
-
-## FE-EPIC-09: SMM-инструменты (шаблоны + экспорт)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟢 Низкий |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 8-9 |
-| **Зависимости** | FE-EPIC-04 |
-
-### User Stories:
-```
-US-FE-09.1: Библиотека шаблонов сторис (5-10 макетов)
-US-FE-09.2: Редактор шаблона (текст, фото, цвета)
-US-FE-09.3: Предпросмотр сторис (мобильный формат)
-US-FE-09.4: Экспорт в PNG/JPG (скачивание)
-US-FE-09.5: Авто-постинг в Telegram (через бота)
-US-FE-09.6: Сохранение шаблонов в медиатеку
-US-FE-09.7: Генератор хештегов и текста поста
-```
-
-### Deliverables:
-- [ ] Template gallery component
-- [ ] Story editor (canvas-based)
-- [ ] Mobile preview frame
-- [ ] Image export utility (html2canvas)
-- [ ] Telegram post integration
-- [ ] Media library grid
-- [ ] Hashtag generator component
-
-### Acceptance Criteria:
-```
-✅ Экспорт изображения ≤3 сек
-✅ Шаблон сохраняет все кастомизации
-✅ Предпросмотр идентичен экспорту
-✅ Хештеги копируются в буфер одним кликом
-```
-
----
-
-## FE-EPIC-10: База знаний (отели + вики)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 6-7 |
-| **Зависимости** | BE-EPIC-08 |
-
-### User Stories:
-```
-US-FE-10.1: Список личных отелей (поиск, фильтры, теги)
-US-FE-10.2: Карточка отеля с заметками агента
-US-FE-10.3: Добавление/редактирование заметки (текст, фото, голос)
-US-FE-10.4: Создание списков отелей (тематические подборки)
-US-FE-10.5: Шеринг списков (по ссылке, внутри команды)
-US-FE-10.6: Визовый справочник (статьи, поиск)
-US-FE-10.7: Чек-листы (создание, прохождение, экспорт)
-US-FE-10.8: Голосовой ввод заметок (speech-to-text)
-```
-
-### Deliverables:
-- [ ] Hotel list with tags & search
-- [ ] Hotel card with agent notes section
-- [ ] Note editor (text + media upload)
-- [ ] List builder UI
-- [ ] Share modal (permissions + link)
-- [ ] Wiki article viewer
-- [ ] Checklist component
-- [ ] Voice recording component (Web Audio API)
-
-### Acceptance Criteria:
-```
-✅ Голос конвертируется в текст с точностью ≥90%
-✅ Списки можно делать приватными/публичными/по ссылке
-✅ Заметки отображаются с аватаром автора
-✅ Чек-листы сохраняют прогресс
-```
-
----
-
-# ⚙️ BACKEND ЭПИКИ
-
-## BE-EPIC-01: Система аутентификации и авторизации
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 1-2 |
-| **Зависимости** | Нет |
-
-### User Stories:
-```
-US-BE-01.1: Регистрация пользователя (email/телефон, валидация)
-US-BE-01.2: Логин с выдачей JWT (access + refresh)
-US-BE-01.3: 2FA генерация секрет + верификация TOTP
-US-BE-01.4: Восстановление пароля (токен по email/SMS)
-US-BE-01.5: Ролевая модель (owner, agent, manager, tourist)
-US-BE-01.6: Middleware для защиты эндпоинтов
-US-BE-01.7: Refresh token ротация
-US-BE-01.8: Логаут (blacklist токенов)
-```
-
-### Deliverables:
-- [ ] Auth controller (register, login, refresh, logout)
-- [ ] JWT service (sign, verify, refresh)
-- [ ] 2FA service (speakeasy / otpauth)
-- [ ] Password reset service (email/SMS provider)
-- [ ] Role guard decorator/middleware
-- [ ] Token blacklist (Redis)
-- [ ] Unit tests (≥90% coverage)
-
-### Acceptance Criteria:
-```
-✅ Пароли хешируются bcrypt/argon2
-✅ Токены истекают по расписанию (access 15min, refresh 7days)
-✅ 2FA нельзя отключить без текущего кода
-✅ Role guard блокирует доступ неавторизованным
-```
-
-### API Endpoints:
-```
-POST /api/v1/auth/register
-POST /api/v1/auth/login
-POST /api/v1/auth/refresh
-POST /api/v1/auth/logout
-POST /api/v1/auth/2fa/enable
-POST /api/v1/auth/2fa/verify
-POST /api/v1/auth/password/reset/request
-POST /api/v1/auth/password/reset/confirm
-```
-
----
-
-## BE-EPIC-02: Поиск и агрегация туров
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | XL (89 story points) |
-| **Спринты** | 2-5 |
-| **Зависимости** | BE-EPIC-01 |
-
-### User Stories:
-```
-US-BE-02.1: Интеграция с API туроператоров (1-2 на старте)
-US-BE-02.2: Нормализация данных от разных ТО (единая схема)
-US-BE-02.3: Поиск туров с фильтрами (ElasticSearch)
-US-BE-02.4: Кэширование результатов поиска (Redis, TTL 15-30min)
-US-BE-02.5: Календарь низких цен (агрегация по датам)
-US-BE-02.6: Сравнение туров (серверная логика)
-US-BE-02.7: Пагинация и сортировка результатов
-US-BE-02.8: Обработка ошибок API ТО (graceful degradation)
-US-BE-02.9: Логирование запросов к ТО (для отладки)
-```
-
-### Deliverables:
-- [ ] Tour operator API adapters (interface + implementations)
-- [ ] Data normalizer service (unified tour schema)
-- [ ] Search service (ElasticSearch queries)
-- [ ] Cache layer (Redis + invalidation strategy)
-- [ ] Price calendar aggregator
-- [ ] Comparison service
-- [ ] Error handler & retry logic
-- [ ] Request logging (correlation IDs)
-
-### Acceptance Criteria:
-```
-✅ Поиск возвращает результаты ≤500ms (p95)
-✅ При недоступности ТО — показ кэша с меткой
-✅ Данные нормализованы (единые названия стран, отелей)
-✅ Кэш инвалидируется при изменении цены >3%
-```
-
-### API Endpoints:
-```
-GET  /api/v1/tours/search
-GET  /api/v1/tours/{id}
-GET  /api/v1/hotels/{id}
-GET  /api/v1/hotels/{id}/price-history
-POST /api/v1/tours/compare
-GET  /api/v1/calendar/low-prices
-```
-
----
-
-## BE-EPIC-03: Подборки (Collections)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 4-6 |
-| **Зависимости** | BE-EPIC-02 |
-
-### User Stories:
-```
-US-BE-03.1: CRUD подборок (создание, чтение, обновление, удаление)
-US-BE-03.2: Добавление/удаление туров в подборку
-US-BE-03.3: Фиксация цен (snapshot на момент публикации)
-US-BE-03.4: Генерация публичной ссылки (token-based access)
-US-BE-03.5: Версионность (сохранение истории изменений)
-US-BE-03.6: Экспорт PDF (server-side rendering)
-US-BE-03.7: Экспорт текста для мессенджеров
-US-BE-03.8: Трекинг открытий подборки (analytics events)
-US-BE-03.9: Шаблоны оформления (сохранение конфигурации)
-```
-
-### Deliverables:
-- [ ] Collection CRUD service
-- [ ] Collection items service
-- [ ] Price snapshot service
-- [ ] Share token generator
-- [ ] Versioning service (snapshots)
-- [ ] PDF generator (Puppeteer / wkhtmltopdf)
-- [ ] Text formatter for messengers
-- [ ] Analytics event collector
-- [ ] Template configuration storage
-
-### Acceptance Criteria:
-```
-✅ Публичная ссылка работает без авторизации
-✅ Версии сохраняются при каждом значимом изменении
-✅ PDF генерируется ≤5 сек
-✅ Трекинг не блокирует основную логику (async)
-```
-
-### API Endpoints:
-```
-GET  /api/v1/collections
-POST /api/v1/collections
-PUT  /api/v1/collections/{id}
-DELETE /api/v1/collections/{id}
-POST /api/v1/collections/{id}/items
-DELETE /api/v1/collections/{id}/items/{item_id}
-POST /api/v1/collections/{id}/publish
-GET  /api/v1/collections/share/{token}
-POST /api/v1/collections/{id}/export
-GET  /api/v1/collections/{id}/versions
-```
-
----
-
-## BE-EPIC-04: Умный подписчик (мониторинг цен)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | XL (89 story points) |
-| **Спринты** | 4-7 |
-| **Зависимости** | BE-EPIC-02, BE-EPIC-09 |
-
-### User Stories:
-```
-US-BE-04.1: Профиль предпочтений туриста (CRUD)
-US-BE-04.2: Фоновый мониторинг (cron каждые 2-4 часа)
-US-BE-04.3: Сравнение цен с последним снимком
-US-BE-04.4: Умные триггеры (↓≥5%, горящий, мало мест)
-US-BE-04.5: Очередь уведомлений (priority queue)
-US-BE-04.6: Отправка через Telegram Bot API
-US-BE-04.7: Отправка через email (SMTP / provider)
-US-BE-04.8: Частота уведомлений (сразу/день/3 дня)
-US-BE-04.9: История снимков цен (для графика)
-US-BE-04.10: Трекинг вовлечённости (открытия, клики)
-```
-
-### Deliverables:
-- [ ] Tourist profile service
-- [ ] Price monitoring cron job
-- [ ] Price comparison service
-- [ ] Trigger rules engine
-- [ ] Notification queue (Celery / BullMQ)
-- [ ] Telegram notification sender
-- [ ] Email notification sender
-- [ ] Frequency throttling service
-- [ ] Price snapshot storage
-- [ ] Analytics event tracker
-
-### Acceptance Criteria:
-```
-✅ Мониторинг работает без дублирования запросов к ТО
-✅ Уведомления отправляются ≤5 минут после изменения
-✅ Частота соблюдается (не чаще настройки пользователя)
-✅ При ошибке отправки — повтор через 5 минут (retry)
-```
-
-### API Endpoints:
-```
-POST /api/v1/subscriptions
-GET  /api/v1/subscriptions/me
-PUT  /api/v1/subscriptions/me
-DELETE /api/v1/subscriptions/me
-GET  /api/v1/subscriptions/preview
-GET  /api/v1/subscriptions/history
-```
-
----
-
-## BE-EPIC-05: Мини-CRM (клиенты + сделки)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 6-8 |
-| **Зависимости** | BE-EPIC-01 |
-
-### User Stories:
-```
-US-BE-05.1: CRUD клиентов (контакты, предпочтения)
-US-BE-05.2: Шифрование персональных данных (passport, phone)
-US-BE-05.3: Теги и сегментация клиентов
-US-BE-05.4: CRUD сделок (воронка этапов)
-US-BE-05.5: Привязка сделок к подборкам
-US-BE-05.6: История коммуникаций (лог)
-US-BE-05.7: Авто-триггеры (напоминания по датам)
-US-BE-05.8: Экспорт данных клиента (152-ФЗ)
-US-BE-05.9: Удаление данных по запросу (152-ФЗ)
-```
-
-### Deliverables:
-- [ ] Client CRUD service
-- [ ] Encryption service (AES-256 for sensitive fields)
-- [ ] Tag & segmentation service
-- [ ] Deal pipeline service
-- [ ] Collection-deal linkage
-- [ ] Communication log service
-- [ ] Reminder scheduler (cron)
-- [ ] Data export service (JSON/CSV)
-- [ ] Data deletion service (soft delete + hard delete)
-
-### Acceptance Criteria:
-```
-✅ Чувствительные данные шифруются перед записью в БД
-✅ Экспорт содержит все данные клиента в читаемом виде
-✅ Удаление помечает запись + очищает персональные данные
-✅ Триггеры срабатывают по расписанию (±15 минут)
-```
-
-### API Endpoints:
-```
-GET  /api/v1/clients
-POST /api/v1/clients
-PUT  /api/v1/clients/{id}
-DELETE /api/v1/clients/{id}
-GET  /api/v1/clients/{id}/deals
-POST /api/v1/deals
-PUT  /api/v1/deals/{id}
-PUT  /api/v1/deals/{id}/stage
-GET  /api/v1/clients/{id}/export
-POST /api/v1/clients/{id}/delete-request
-```
-
----
-
-## BE-EPIC-06: Финансовый модуль
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 7-8 |
-| **Зависимости** | BE-EPIC-05 |
-
-### User Stories:
-```
-US-BE-06.1: Курсы валют (авто-загрузка ЦБ + ручной ввод)
-US-BE-06.2: История курсов (на любую дату)
-US-BE-06.3: Калькулятор маржи (цена × комиссия − расходы)
-US-BE-06.4: Учёт доходов по сделкам
-US-BE-06.5: Учёт расходов (реклама, подписки, комиссии)
-US-BE-06.6: Агрегация по периодам (день/неделя/месяц/год)
-US-BE-06.7: Агрегация по агентам/направлениям
-US-BE-06.8: Экспорт финансовых отчётов
-```
-
-### Deliverables:
-- [ ] Currency rate service (CB RF API + manual)
-- [ ] Rate history storage
-- [ ] Margin calculator service
-- [ ] Revenue tracking service
-- [ ] Expense tracking service
-- [ ] Aggregation service (time-based, agent-based)
-- [ ] Report generator (CSV/Excel)
-
-### Acceptance Criteria:
-```
-✅ Курсы ЦБ загружаются автоматически (daily cron)
-✅ Ручной курс имеет приоритет над авто
-✅ Маржа считается с учётом курса на дату бронирования
-✅ Отчёты формируются ≤3 сек
-```
-
-### API Endpoints:
-```
-GET  /api/v1/finance/rates
-POST /api/v1/finance/rates
-GET  /api/v1/finance/rates/history
-POST /api/v1/finance/calculate-margin
-GET  /api/v1/finance/revenue
-GET  /api/v1/finance/expenses
-POST /api/v1/finance/export
-```
-
----
-
-## BE-EPIC-07: Telegram Bot интеграция
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 5-7 |
-| **Зависимости** | BE-EPIC-04 |
-
-### User Stories:
-```
-US-BE-07.1: Webhook для Telegram Bot API
-US-BE-07.2: Обработка команд (/start, /help, /subscribe)
-US-BE-07.3: Обработка callback_query (кнопки в сообщениях)
-US-BE-07.4: Отправка подборок в Telegram (форматирование)
-US-BE-07.5: Deep links в Mini App
-US-BE-07.6: Трекинг открытий сообщений
-US-BE-07.7: Rate limiting (защита от спама)
-US-BE-07.8: Логи бота (для отладки)
-```
-
-### Deliverables:
-- [ ] Telegram webhook handler
-- [ ] Command processor
-- [ ] Callback query handler
-- [ ] Message formatter (collections, notifications)
-- [ ] Deep link generator
-- [ ] Open tracking (unique links per user)
-- [ ] Rate limiter (Redis-based)
-- [ ] Bot logging service
-
-### Acceptance Criteria:
-```
-✅ Webhook обрабатывает ≤200ms (p95)
-✅ Кнопки работают на всех устройствах
-✅ Deep links открывают правильный экран Mini App
-✅ Rate limit блокирует после 10 запросов/мин
-```
-
-### API Endpoints:
-```
-POST /api/v1/webhooks/telegram
-GET  /api/v1/bot/stats
-POST /api/v1/bot/send-message
-POST /api/v1/bot/send-collection
-```
-
----
-
-## BE-EPIC-08: База знаний (отели + контент)
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 6-7 |
-| **Зависимости** | BE-EPIC-02 |
-
-### User Stories:
-```
-US-BE-08.1: CRUD заметок агента в карточке отеля
-US-BE-08.2: Загрузка медиа (фото, голосовые)
-US-BE-08.3: Теги для отелей (поиск и фильтрация)
-US-BE-08.4: Списки отелей (CRUD, шеринг)
-US-BE-08.5: Права доступа к спискам (приватный/команда/публичный)
-US-BE-08.6: Визовый справочник (статьи CRUD)
-US-BE-08.7: Чек-листы (CRUD, прогресс)
-US-BE-08.8: Голосовые заметки (storage + transcription API)
-```
-
-### Deliverables:
-- [ ] Agent notes service
-- [ ] Media upload service (S3)
-- [ ] Tag service
-- [ ] Hotel list service
-- [ ] Permission service (lists)
-- [ ] Wiki article service
-- [ ] Checklist service
-- [ ] Voice transcription integration (Yandex SpeechKit / Google)
-
-### Acceptance Criteria:
-```
-✅ Медиа загружаются ≤3 сек (до 10MB)
-✅ Голос транскрибируется с точностью ≥90%
-✅ Права доступа проверяются перед каждым действием
-✅ Списки можно клонировать (для команды)
-```
-
-### API Endpoints:
-```
-GET  /api/v1/hotels/{id}/notes
-POST /api/v1/hotels/{id}/notes
-PUT  /api/v1/hotels/notes/{note_id}
-DELETE /api/v1/hotels/notes/{note_id}
-POST /api/v1/media/upload
-GET  /api/v1/hotel-lists
-POST /api/v1/hotel-lists
-PUT  /api/v1/hotel-lists/{id}
-POST /api/v1/hotel-lists/{id}/share
-GET  /api/v1/wiki/articles
-GET  /api/v1/checklists
-```
-
----
-
-## BE-EPIC-09: Уведомления и события
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🟡 Средний |
-| **Сложность** | M (34 story points) |
-| **Спринты** | 5-7 |
-| **Зависимости** | BE-EPIC-04, BE-EPIC-07 |
-
-### User Stories:
-```
-US-BE-09.1: Единая очередь уведомлений (priority queue)
-US-BE-09.2: Каналы: Telegram, email, push
-US-BE-09.3: Шаблоны уведомлений (i18n ready)
-US-BE-09.4: Throttling (не чаще настройки пользователя)
-US-BE-09.5: Статусы: pending, sent, failed, read
-US-BE-09.6: Retry logic (3 попытки с экспоненциальной задержкой)
-US-BE-09.7: Логирование всех уведомлений
-US-BE-09.8: Аналитика доставляемости
-```
-
-### Deliverables:
-- [ ] Notification queue service
-- [ ] Channel adapters (Telegram, email, push)
-- [ ] Template engine (Handlebars / Jinja2)
-- [ ] Throttling service
-- [ ] Status tracking
-- [ ] Retry mechanism
-- [ ] Notification log
-- [ ] Delivery analytics
-
-### Acceptance Criteria:
-```
-✅ Уведомления не дублируются
-✅ Retry не создаёт бесконечный цикл (max 3)
-✅ Шаблоны поддерживают переменные (имя, цена, даты)
-✅ Лог содержит статус и ошибку (если failed)
-```
-
-### API Endpoints:
-```
-GET  /api/v1/notifications
-PUT  /api/v1/notifications/{id}/read
-POST /api/v1/notifications/test
-GET  /api/v1/notifications/stats
-```
-
----
-
-## BE-EPIC-10: Инфраструктура и DevOps
-| Параметр | Значение |
-|----------|----------|
-| **Приоритет** | 🔴 Критический |
-| **Сложность** | L (55 story points) |
-| **Спринты** | 1-9 (постоянно) |
-| **Зависимости** | Нет |
-
-### User Stories:
-```
-US-BE-10.1: Docker Compose для локальной разработки
-US-BE-10.2: CI/CD пайплайн (test → staging → production)
-US-BE-10.3: Мониторинг (Prometheus + Grafana)
-US-BE-10.4: Логирование (ELK / Loki)
-US-BE-10.5: Health checks для всех сервисов
-US-BE-10.6: Резервное копирование БД (daily)
-US-BE-10.7: SSL/TLS настройка
-US-BE-10.8: Load balancing (nginx / traefik)
-US-BE-10.9: Seed данные для тестирования
-```
-
-### Deliverables:
-- [ ] Dockerfiles для всех сервисов
-- [ ] Docker Compose (dev, staging, prod)
-- [ ] GitHub Actions / GitLab CI config
-- [ ] Prometheus metrics exporters
-- [ ] Grafana dashboards
-- [ ] Log aggregation config
-- [ ] Health check endpoints
-- [ ] Backup scripts (pg_dump + S3)
-- [ ] SSL certificates (Let's Encrypt)
-- [ ] Database seed scripts
-
-### Acceptance Criteria:
-```
-✅ Локальный запуск: docker-compose up → всё работает
-✅ Деплой на staging: git push → авто-деплой за ≤10 минут
-✅ Метрики доступны в Grafana без ошибок
-✅ Бекапы восстанавливаются за ≤30 минут
-✅ Health checks возвращают 200 при нормальной работе
-```
-
----
-
-# 📊 СВОДНАЯ ТАБЛИЦА ЭПИКОВ
-
-| Epic ID | Название | Команда | Приоритет | Сложность | Спринты | Статус |
-|---------|----------|---------|-----------|-----------|---------|--------|
-| **FE-01** | Аутентификация | Frontend | 🔴 | M | 1-2 | 📋 Backlog |
-| **FE-02** | Кабинет агента | Frontend | 🔴 | L | 2-4 | 📋 Backlog |
-| **FE-03** | Поиск туров | Frontend | 🔴 | XL | 3-5 | 📋 Backlog |
-| **FE-04** | Конструктор подборок | Frontend | 🔴 | XL | 4-6 | 📋 Backlog |
-| **FE-05** | Интерфейс туриста | Frontend | 🔴 | L | 4-6 | 📋 Backlog |
-| **FE-06** | Мини-CRM | Frontend | 🟡 | L | 6-8 | 📋 Backlog |
-| **FE-07** | Финансы | Frontend | 🟡 | M | 7-8 | 📋 Backlog |
-| **FE-08** | Telegram Mini App | Frontend | 🟡 | M | 5-7 | 📋 Backlog |
-| **FE-09** | SMM-инструменты | Frontend | 🟢 | M | 8-9 | 📋 Backlog |
-| **FE-10** | База знаний | Frontend | 🟡 | M | 6-7 | 📋 Backlog |
-| **BE-01** | Аутентификация | Backend | 🔴 | M | 1-2 | 📋 Backlog |
-| **BE-02** | Поиск туров | Backend | 🔴 | XL | 2-5 | 📋 Backlog |
-| **BE-03** | Подборки | Backend | 🔴 | L | 4-6 | 📋 Backlog |
-| **BE-04** | Умный подписчик | Backend | 🔴 | XL | 4-7 | 📋 Backlog |
-| **BE-05** | Мини-CRM | Backend | 🟡 | L | 6-8 | 📋 Backlog |
-| **BE-06** | Финансы | Backend | 🟡 | M | 7-8 | 📋 Backlog |
-| **BE-07** | Telegram Bot | Backend | 🟡 | M | 5-7 | 📋 Backlog |
-| **BE-08** | База знаний | Backend | 🟡 | M | 6-7 | 📋 Backlog |
-| **BE-09** | Уведомления | Backend | 🟡 | M | 5-7 | 📋 Backlog |
-| **BE-10** | Инфраструктура | DevOps | 🔴 | L | 1-9 | 🔄 In Progress |
-
----
-
-# 🗓️ РЕКОМЕНДУЕМЫЙ ПЛАН СПРИНТОВ
+## 🏗️ АРХИТЕКТУРА (ОКОНЧАТЕЛЬНАЯ)
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│ СПРИНТ 1-2: Фундамент                                           │
-├─────────────────────────────────────────────────────────────────┤
-│ BE-01: Аутентификация                                           │
-│ BE-10: Инфраструктура (настройка CI/CD, Docker)                 │
-│ FE-01: Аутентификация                                           │
+│                    FRONTEND (Next.js 16)                        │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  App Router (Server Components + Client Components)     │   │
+│  │  - SEO страницы → Server Components                     │   │
+│  │  - Интерактив → Client Components                       │   │
+│  │  - API Routes → Только прокси (если нужно)             │   │
+│  │  - Middleware → Авторизация, редиректы                  │   │
+│  └─────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
-
+                               │
+                               │ HTTPS / WebSocket
+                               ▼
 ┌─────────────────────────────────────────────────────────────────┐
-│ СПРИНТ 3-5: Ядро поиска и подборок                              │
-├─────────────────────────────────────────────────────────────────┤
-│ BE-02: Поиск туров                                              │
-│ BE-03: Подборки                                                 │
-│ FE-02: Кабинет агента                                           │
-│ FE-03: Поиск туров                                              │
-│ FE-04: Конструктор подборок (часть 1)                           │
+│                    BACKEND (NestJS 11)                          │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  API Gateway (REST)                                     │   │
+│  │  /api/v1/* → JWT, Guards, Validation                    │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Business Modules                                       │   │
+│  │  Auth, Tours, Collections, Subscriptions,              │   │
+│  │  CRM, Finance, Knowledge, SMM                           │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  Queue Workers (BullMQ)                                 │   │
+│  │  Email, PDF, PriceMonitor, Telegram                     │   │
+│  └─────────────────────────────────────────────────────────┘   │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  WebSocket Gateway                                      │   │
+│  │  Real-time уведомления для агентов                      │   │
+│  └─────────────────────────────────────────────────────────┘   │
 └─────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│ СПРИНТ 4-7: Умный подписчик и турист                            │
-├─────────────────────────────────────────────────────────────────┤
-│ BE-04: Умный подписчик                                          │
-│ BE-07: Telegram Bot                                             │
-│ BE-09: Уведомления                                              │
-│ FE-04: Конструктор подборок (часть 2)                           │
-│ FE-05: Интерфейс туриста                                        │
-│ FE-08: Telegram Mini App                                        │
-└─────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│ СПРИНТ 6-8: CRM и финансы                                       │
-├─────────────────────────────────────────────────────────────────┤
-│ BE-05: Мини-CRM                                                 │
-│ BE-06: Финансы                                                  │
-│ BE-08: База знаний                                              │
-│ FE-06: Мини-CRM                                                 │
-│ FE-07: Финансы                                                  │
-│ FE-10: База знаний                                              │
-└─────────────────────────────────────────────────────────────────┘
-
-┌─────────────────────────────────────────────────────────────────┐
-│ СПРИНТ 8-9: SMM и полировка                                     │
-├─────────────────────────────────────────────────────────────────┤
-│ FE-09: SMM-инструменты                                          │
-│ Bug fixes, performance optimization, security audit             │
-│ Load testing, documentation                                     │
-└─────────────────────────────────────────────────────────────────┘
+                               │
+        ┌──────────────────────┼──────────────────────┐
+        ▼                      ▼                      ▼
+┌───────────────┐    ┌───────────────┐    ┌───────────────┐
+│  PostgreSQL   │    │    Redis      │    │  S3/MinIO     │
+│  17 + Prisma  │    │  7.4 + BullMQ │    │  (медиа)      │
+└───────────────┘    └───────────────┘    └───────────────┘
 ```
 
 ---
 
-# 🔗 МАТРИЦА ЗАВИСИМОСТЕЙ
+## 🎨 FRONTEND (NEXT.JS 16) — ОБНОВЛЕННЫЕ ЭПИКИ
 
+### FE-EPIC-01: Аутентификация и авторизация
+
+**Особенности Next.js 16:**
+- `middleware.ts` для защиты роутов
+- Server Actions **только** для форм (регистрация, логин)
+- httpOnly cookies через `cookies()` из `next/headers`
+- **Без бизнес-логики** — все запросы к NestJS
+
+```typescript
+// app/(auth)/login/actions.ts
+'use server'
+
+import { cookies } from 'next/headers'
+
+export async function login(formData: FormData) {
+  const response = await fetch(`${API_URL}/auth/login`, {
+    method: 'POST',
+    body: JSON.stringify({
+      email: formData.get('email'),
+      password: formData.get('password'),
+    }),
+  })
+  
+  const { accessToken, refreshToken } = await response.json()
+  
+  const cookieStore = await cookies()
+  cookieStore.set('access_token', accessToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 15, // 15 минут
+  })
+  
+  cookieStore.set('refresh_token', refreshToken, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 60 * 60 * 24 * 7, // 7 дней
+  })
+  
+  redirect('/dashboard')
+}
 ```
-                    ┌──────────┐
-                    │ BE-10    │
-                    │ Инфра    │
-                    └────┬─────┘
-                         │
-         ┌───────────────┼───────────────┐
-         ▼               ▼               ▼
-    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ BE-01   │    │ BE-02   │    │ BE-09   │
-    │ Auth    │    │ Search  │    │ Notify  │
-    └────┬────┘    └────┬────┘    └────┬────┘
-         │              │              │
-         ▼              ▼              ▼
-    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ BE-05   │    │ BE-03   │    │ BE-04   │
-    │ CRM     │    │ Collect │    │ Subscr  │
-    └────┬────┘    └────┬────┘    └────┬────┘
-         │              │              │
-         ▼              ▼              ▼
-    ┌─────────┐    ┌─────────┐    ┌─────────┐
-    │ BE-06   │    │ BE-07   │    │ BE-08   │
-    │ Finance │    │ TG Bot  │    │ Knowledge│
-    └─────────┘    └─────────┘    └─────────┘
 
-    Frontend зависит от соответствующих Backend эпиков + BE-01
+**Middleware:**
+```typescript
+// middleware.ts
+import { NextResponse } from 'next/server'
+import type { NextRequest } from 'next/server'
+
+export async function middleware(request: NextRequest) {
+  const accessToken = request.cookies.get('access_token')
+  const pathname = request.nextUrl.pathname
+  
+  // Публичные страницы
+  if (pathname.startsWith('/public') || pathname.startsWith('/collection')) {
+    return NextResponse.next()
+  }
+  
+  // Защищенные роуты
+  if (!accessToken) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+  
+  // Проверка роли через бэкенд (опционально)
+  const user = await fetch(`${API_URL}/auth/me`, {
+    headers: { Authorization: `Bearer ${accessToken.value}` },
+  })
+  
+  if (!user.ok) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+  
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: ['/agent/:path*', '/tourist/:path*', '/dashboard/:path*'],
+}
 ```
 
 ---
 
-# 📈 МЕТРИКИ ОТслеживания ПРОГРЕССА
+### FE-EPIC-02: Кабинет агента
 
-| Метрика | Цель | Как измерять |
-|---------|------|--------------|
-| **Velocity** | 40-60 story points / спринт | Jira / Linear / Trello |
-| **Burndown** | Линейное снижение к концу спринта | Sprint burndown chart |
-| **Code Coverage** | ≥80% для критических модулей | Jest / Pytest coverage |
-| **Cycle Time** | ≤3 дня на User Story | От In Progress → Done |
-| **Bug Rate** | <5% от закрытых задач | Bug / Story ratio |
-| **Deploy Frequency** | ≥2 раза в неделю на staging | CI/CD logs |
+**Особенности Next.js 16:**
+- Server Components для дашборда
+- Streaming с Suspense
+- Parallel Routes для модалок
+- React 19 `use` для промисов
+
+```typescript
+// app/(agent)/dashboard/page.tsx
+import { Suspense } from 'react'
+import { DashboardSkeleton } from '@/components/skeletons'
+import { RevenueWidget } from '@/components/dashboard/revenue-widget'
+import { CollectionsWidget } from '@/components/dashboard/collections-widget'
+import { ActivityWidget } from '@/components/dashboard/activity-widget'
+
+export default async function DashboardPage() {
+  // Параллельные запросы с Promise.all
+  const [revenue, collections, activity] = await Promise.all([
+    fetchRevenue(),
+    fetchRecentCollections(),
+    fetchActivity(),
+  ])
+  
+  return (
+    <div className="grid grid-cols-3 gap-4">
+      <Suspense fallback={<DashboardSkeleton />}>
+        <RevenueWidget data={revenue} />
+      </Suspense>
+      <Suspense fallback={<DashboardSkeleton />}>
+        <CollectionsWidget data={collections} />
+      </Suspense>
+      <Suspense fallback={<DashboardSkeleton />}>
+        <ActivityWidget data={activity} />
+      </Suspense>
+    </div>
+  )
+}
+```
+
+**React 19: use() для асинхронных данных в компонентах**
+```typescript
+// components/dashboard/RevenueWidget.tsx
+import { use } from 'react'
+
+async function fetchRevenue() {
+  const res = await fetch(`${API_URL}/finance/revenue`, {
+    headers: { Cookie: cookies().toString() },
+  })
+  return res.json()
+}
+
+export function RevenueWidget() {
+  const data = use(fetchRevenue()) // React 19 API
+  
+  return <Chart data={data} />
+}
+```
 
 ---
 
-> 📌 **Следующий шаг**: Выбрать эпик для Спринта 1, декомпозировать на User Stories, назначить исполнителей, оценить в story points.
+### FE-EPIC-03: Поиск туров
 
-Нужна помощь с:
-- 📝 Декомпозицией конкретного эпика на User Stories?
-- 🎯 Шаблоном для Jira/Linear импорта?
-- 📊 Шаблоном Sprint Planning документа?
-- 🧪 Планом тестирования для эпиков?
+**Особенности Next.js 16:**
+- `useSearchParams` для фильтров
+- Server Actions для поиска (или обычный fetch)
+- Кэширование через `fetch` с `next: { revalidate }`
 
-Готов помочь детализировать любой эпик под вашу команду. 🚀
+```typescript
+// app/(agent)/tours/page.tsx
+import { Suspense } from 'react'
+import { TourSearchForm } from '@/components/tours/tour-search-form'
+import { TourResults } from '@/components/tours/tour-results'
+import { TourFilters } from '@/components/tours/tour-filters'
+
+interface SearchParams {
+  q?: string
+  country?: string
+  dateFrom?: string
+  dateTo?: string
+  budget?: string
+  page?: string
+}
+
+export default async function ToursPage({
+  searchParams,
+}: {
+  searchParams: Promise<SearchParams>
+}) {
+  const params = await searchParams
+  
+  return (
+    <div className="flex gap-6">
+      <aside className="w-80">
+        <TourFilters initialFilters={params} />
+      </aside>
+      <main className="flex-1">
+        <TourSearchForm initialQuery={params.q} />
+        <Suspense fallback={<TourResultsSkeleton />}>
+          <TourResults filters={params} />
+        </Suspense>
+      </main>
+    </div>
+  )
+}
+```
+
+**Server Component с пагинацией:**
+```typescript
+// components/tours/TourResults.tsx
+export async function TourResults({ filters }: { filters: SearchParams }) {
+  const response = await fetch(
+    `${API_URL}/tours/search?${new URLSearchParams(filters)}`,
+    {
+      next: { revalidate: 60 }, // Кэшировать на 60 секунд
+      headers: { Cookie: cookies().toString() },
+    }
+  )
+  
+  const { tours, total, page, totalPages } = await response.json()
+  
+  return (
+    <>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {tours.map((tour) => (
+          <TourCard key={tour.id} tour={tour} />
+        ))}
+      </div>
+      <Pagination currentPage={page} totalPages={totalPages} />
+    </>
+  )
+}
+```
+
+---
+
+## ⚙️ BACKEND (NESTJS 11) — СТРУКТУРА
+
+### Модульная структура
+
+```
+src/
+├── main.ts
+├── app.module.ts
+├── common/
+│   ├── guards/
+│   │   ├── auth.guard.ts
+│   │   └── roles.guard.ts
+│   ├── interceptors/
+│   │   └── logging.interceptor.ts
+│   ├── filters/
+│   │   └── http-exception.filter.ts
+│   └── decorators/
+│       ├── roles.decorator.ts
+│       └── current-user.decorator.ts
+├── modules/
+│   ├── auth/
+│   │   ├── auth.module.ts
+│   │   ├── auth.controller.ts
+│   │   ├── auth.service.ts
+│   │   ├── strategies/
+│   │   │   ├── jwt.strategy.ts
+│   │   │   └── refresh.strategy.ts
+│   │   └── dto/
+│   ├── users/
+│   ├── tours/
+│   │   ├── tours.module.ts
+│   │   ├── tours.controller.ts
+│   │   ├── tours.service.ts
+│   │   ├── providers/
+│   │   │   ├── tour-operator.adapter.ts
+│   │   │   └── search.service.ts
+│   │   └── dto/
+│   ├── collections/
+│   ├── subscriptions/
+│   ├── crm/
+│   ├── finance/
+│   ├── notifications/
+│   │   ├── notifications.module.ts
+│   │   ├── notifications.gateway.ts (WebSocket)
+│   │   ├── processors/
+│   │   │   ├── email.processor.ts
+│   │   │   ├── pdf.processor.ts
+│   │   │   └── price-monitor.processor.ts
+│   │   └── dto/
+│   └── knowledge/
+├── prisma/
+│   ├── schema.prisma
+│   └── migrations/
+└── config/
+    ├── configuration.ts
+    └── validation.ts
+```
+
+### Пример модуля (Tours)
+
+```typescript
+// tours/tours.module.ts
+import { Module } from '@nestjs/common'
+import { ToursController } from './tours.controller'
+import { ToursService } from './tours.service'
+import { SearchService } from './providers/search.service'
+import { TourOperatorAdapter } from './providers/tour-operator.adapter'
+import { PrismaModule } from '../prisma/prisma.module'
+import { RedisModule } from '../redis/redis.module'
+
+@Module({
+  imports: [PrismaModule, RedisModule],
+  controllers: [ToursController],
+  providers: [ToursService, SearchService, TourOperatorAdapter],
+  exports: [ToursService],
+})
+export class ToursModule {}
+```
+
+```typescript
+// tours/tours.service.ts
+import { Injectable, Inject } from '@nestjs/common'
+import { PrismaService } from '../prisma/prisma.service'
+import { RedisService } from '../redis/redis.service'
+import { SearchService } from './providers/search.service'
+import { CreateTourDto, SearchToursDto } from './dto'
+
+@Injectable()
+export class ToursService {
+  constructor(
+    private prisma: PrismaService,
+    private redis: RedisService,
+    private search: SearchService,
+  ) {}
+
+  async search(dto: SearchToursDto) {
+    // Проверяем кэш
+    const cacheKey = `search:${JSON.stringify(dto)}`
+    const cached = await this.redis.get(cacheKey)
+    if (cached) return JSON.parse(cached)
+
+    // Ищем через PostgreSQL или ElasticSearch
+    const results = await this.search.query(dto)
+
+    // Сохраняем в кэш
+    await this.redis.set(cacheKey, JSON.stringify(results), 'EX', 300)
+
+    return results
+  }
+
+  async create(dto: CreateTourDto) {
+    const tour = await this.prisma.tour.create({
+      data: {
+        ...dto,
+        hotel: { connect: { id: dto.hotelId } },
+      },
+    })
+
+    // Инвалидируем кэш поиска
+    await this.redis.delPattern('search:*')
+
+    return tour
+  }
+}
+```
+
+```typescript
+// tours/providers/search.service.ts
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '../../prisma/prisma.service'
+import { SearchToursDto } from '../dto'
+
+@Injectable()
+export class SearchService {
+  constructor(private prisma: PrismaService) {}
+
+  async query(dto: SearchToursDto) {
+    return this.prisma.tour.findMany({
+      where: {
+        AND: [
+          dto.country ? { hotel: { country: { contains: dto.country, mode: 'insensitive' } } } : {},
+          dto.dateFrom ? { startDate: { gte: new Date(dto.dateFrom) } } : {},
+          dto.dateTo ? { endDate: { lte: new Date(dto.dateTo) } } : {},
+          dto.budget ? { price: { lte: dto.budget } } : {},
+          dto.food ? { foodType: { in: dto.food } } : {},
+        ],
+      },
+      include: {
+        hotel: true,
+      },
+      take: dto.limit || 20,
+      skip: ((dto.page || 1) - 1) * (dto.limit || 20),
+      orderBy: {
+        [dto.sortBy || 'price']: dto.sortOrder || 'asc',
+      },
+    })
+  }
+}
+```
+
+---
+
+## 🚀 QUEUE WORKERS (BullMQ)
+
+```typescript
+// notifications/processors/price-monitor.processor.ts
+import { Processor, WorkerHost } from '@nestjs/bullmq'
+import { Job } from 'bullmq'
+import { ToursService } from '../../tours/tours.service'
+import { NotificationsService } from '../notifications.service'
+
+@Processor('price-monitor')
+export class PriceMonitorProcessor extends WorkerHost {
+  constructor(
+    private toursService: ToursService,
+    private notifications: NotificationsService,
+  ) {
+    super()
+  }
+
+  async process(job: Job<{ subscriptionId: string }>) {
+    const { subscriptionId } = job.data
+    
+    // Получаем подписку
+    const subscription = await this.getSubscription(subscriptionId)
+    
+    // Получаем актуальную цену
+    const currentPrice = await this.toursService.getPrice(subscription.tourId)
+    
+    // Сравниваем с последней ценой
+    if (currentPrice < subscription.lastPrice * 0.95) {
+      // Цена упала на 5% → уведомление
+      await this.notifications.sendPriceDrop(subscription.userId, {
+        tourId: subscription.tourId,
+        oldPrice: subscription.lastPrice,
+        newPrice: currentPrice,
+      })
+    }
+    
+    // Обновляем последнюю цену
+    await this.updateSubscriptionPrice(subscriptionId, currentPrice)
+  }
+}
+```
+
+**Запуск воркера:**
+```typescript
+// main.ts (или отдельный entrypoint)
+import { NestFactory } from '@nestjs/core'
+import { WorkerModule } from './worker.module'
+
+async function bootstrap() {
+  const app = await NestFactory.create(WorkerModule)
+  await app.listen(3001) // Воркер на другом порту
+}
+```
+
+---
+
+## 📦 DEPLOY (DOCKER COMPOSE)
+
+```yaml
+# docker-compose.yml
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: travelapp
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7.4-alpine
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD}@postgres:5432/travelapp
+      REDIS_URL: redis://redis:6379
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - redis
+    command: ["node", "dist/main.js"]
+
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://admin:${DB_PASSWORD}@postgres:5432/travelapp
+      REDIS_URL: redis://redis:6379
+    depends_on:
+      - postgres
+      - redis
+    command: ["node", "dist/worker.js"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    environment:
+      NEXT_PUBLIC_API_URL: http://backend:3000/api/v1
+    ports:
+      - "3001:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+```
+
+---
+
+## 📊 ИТОГОВАЯ ТАБЛИЦА ЭПИКОВ (С НОВЫМ СТЭКОМ)
+
+| Epic ID | Название | Команда | Сложность | Этап | Зависимости |
+|---------|----------|---------|-----------|------|-------------|
+| **BE-01** | Аутентификация | Backend | M (21) | 0 | - |
+| **FE-01** | Аутентификация | Frontend | M (21) | 0 | BE-01 |
+| **BE-02** | Туры, отели, поиск | Backend | XL (55) | 1 | BE-01 |
+| **BE-03** | Подборки | Backend | L (34) | 1 | BE-02 |
+| **FE-02** | Кабинет агента | Frontend | L (34) | 1 | FE-01 |
+| **FE-03** | Поиск туров | Frontend | XL (55) | 1 | BE-02 |
+| **FE-04** | Конструктор подборок | Frontend | XL (55) | 2 | BE-03 |
+| **BE-04** | Умный подписчик | Backend | XL (55) | 2 | BE-02 |
+| **BE-05** | Уведомления | Backend | M (21) | 2 | BE-04 |
+| **FE-05** | Интерфейс туриста | Frontend | L (34) | 2 | FE-04, BE-04 |
+| **BE-06** | Мини-CRM | Backend | L (34) | 3 | BE-01 |
+| **FE-06** | Мини-CRM | Frontend | L (34) | 3 | BE-06 |
+| **BE-07** | Финансы | Backend | M (21) | 4 | BE-06 |
+| **FE-07** | Финансы | Frontend | M (21) | 4 | BE-07 |
+| **BE-08** | Telegram Bot | Backend | M (21) | 5 | BE-04 |
+| **FE-08** | Telegram Mini App | Frontend | M (21) | 5 | BE-08 |
+| **BE-09** | База знаний | Backend | M (21) | 6 | BE-02 |
+| **FE-09** | SMM инструменты | Frontend | M (21) | 6 | - |
+| **FE-10** | База знаний | Frontend | M (21) | 6 | BE-09 |
+
+---
+
